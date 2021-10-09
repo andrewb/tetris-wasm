@@ -67,6 +67,10 @@ init().then(({ memory }) => {
   });
 
   const render = () => {
+    if (game.gameOver) {
+      hud.textContent = `Game Over! Score: ${game.score}`;
+      return;
+    }
     const [pieceRowCount, pieceColCount] = game.pieceSize();
     const piece = new Uint8Array(
       memory.buffer,
@@ -128,9 +132,6 @@ init().then(({ memory }) => {
     lastTickTime = timestamp;
     game.update(delta);
     render();
-    if (game.gameOver) {
-      hud.textContent = `Game Over! Score: ${game.score}`;
-    }
     window.requestAnimationFrame(loop);
   };
   loop(0);
